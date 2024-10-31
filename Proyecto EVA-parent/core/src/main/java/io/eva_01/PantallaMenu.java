@@ -1,80 +1,130 @@
 package io.eva_01;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-
+@SuppressWarnings("unused")
 public class PantallaMenu implements Screen {
 
-	private MainEva game;
-	private OrthographicCamera camera;
+    private MainEva game;
+    private OrthographicCamera camera;
+    private Texture backgroundTexture;
 
-	public PantallaMenu(MainEva game) {
-		this.game = game;
-        
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1200, 800);
-	}
+    private boolean isFullscreen = false; // Variable para rastrear el estado de pantalla completa
+    // Define el tamaño de la ventana en modo minimizado
+    private static final int WINDOW_WIDTH = 1200;
+    private static final int WINDOW_HEIGHT = 800;
+    
+ // Variables para almacenar el tamaño actual de la ventana
+    private int currentWidth;
+    private int currentHeight;
 
-	@Override
-	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0.2f, 1);
 
-		camera.update();
-		game.getBatch().setProjectionMatrix(camera.combined);
+    public PantallaMenu(MainEva game) {
+        this.game = game;
 
-		game.getBatch().begin();
-		game.getFont().draw(game.getBatch(), "Bienvenido a Space Navigation !", 140, 400);
-		game.getFont().draw(game.getBatch(), "Pincha en cualquier lado o presiona cualquier tecla para comenzar ...", 100, 300);
-	
-		game.getBatch().end();
+        camera = new OrthographicCamera();
+        currentWidth = Gdx.graphics.getWidth();
+        currentHeight = Gdx.graphics.getHeight();
+        camera.setToOrtho(false, currentWidth, currentHeight);
 
-		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-			Screen ss = new PantallaJuego(game,1,3,0,1,1,10);
-			ss.resize(1200, 800);
-			game.setScreen(ss);
-			dispose();
-		}
-	}
-	
-	
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-	}
+        // Cargar la imagen de fondo desde la carpeta "assets"
+        backgroundTexture = new Texture("evaPIXEL.jpg"); // Asegúrate de que la imagen esté en "assets/evaPIXEL.jpg"
+    }
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0.2f, 1);
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
+        camera.update();
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
+        game.getBatch().begin();
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
+        // Dibujar la imagen de fondo en toda la pantalla con el tamaño actual de la ventana
+        game.getBatch().draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-   
+        // Obtener el ancho y alto de la pantalla para centrar el texto
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
+        // Título
+        String titleText = "Proyecto: EVA";
+        float titleWidth = game.getFont().getRegion().getRegionWidth();
+        float titleX = (screenWidth - titleWidth) / 2;
+        float titleY = screenHeight / 2 + 100;
+
+        // Subtítulo
+        String subtitleText = "La guerra por la instrumentalización humana";
+        float subtitleWidth = game.getFont().getRegion().getRegionWidth();
+        float subtitleX = (screenWidth - subtitleWidth) / 2;
+        float subtitleY = screenHeight / 2 + 50;
+
+        // Instrucciones para comenzar
+        String startText = "Presiona ENTER o ESPACIO para comenzar";
+        float startWidth = game.getFont().getRegion().getRegionWidth();
+        float startX = (screenWidth - startWidth) / 2;
+        float startY = screenHeight / 2 - 50;
+
+        // Dibujar textos centrados
+        game.getFont().draw(game.getBatch(), titleText, titleX, titleY);
+        game.getFont().draw(game.getBatch(), subtitleText, subtitleX, subtitleY);
+        game.getFont().draw(game.getBatch(), startText, startX, startY);
+
+        game.getBatch().end();
+
+        // Alternar entre ventana y pantalla completa con F11
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F11)) {
+            toggleFullscreen();
+        }
+
+        // Cambiar de pantalla al presionar ENTER o ESPACIO
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            Screen ss = new PantallaJuego(game, 1, 3, 0, 1, 1, 10);
+            ss.resize(WINDOW_WIDTH, WINDOW_HEIGHT);
+            game.setScreen(ss);
+            dispose();
+        }
+    }
+
+
+    @Override
+    public void resize(int width, int height) {
+        // Actualizar el tamaño de la ventana
+        currentWidth = width;
+        currentHeight = height;
+        camera.setToOrtho(false, width, height); // Actualizar la cámara para el nuevo tamaño de ventana
+    }
+
+    @Override
+    public void show() {}
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
+    public void hide() {}
+
+    @Override
+    public void dispose() {
+        backgroundTexture.dispose(); // Libera la textura de fondo cuando ya no se necesita
+    }
+
+    private void toggleFullscreen() {
+        // Cambiar entre pantalla completa y modo ventana
+        if (isFullscreen) {
+            Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT);
+        } else {
+            Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        }
+        isFullscreen = !isFullscreen; // Cambiar el estado de pantalla completa
+    }
 }
