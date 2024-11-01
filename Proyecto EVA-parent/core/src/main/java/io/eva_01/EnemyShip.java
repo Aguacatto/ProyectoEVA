@@ -25,4 +25,28 @@ public class EnemyShip extends Entity implements Shootable {
     public void shoot() {
         // Código para disparar (crear una nueva instancia de Bullet)
     }
+
+	@Override
+	public void reload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean canShoot() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	// Getter para health
+    public int getHealth() {
+        return health;
+    }
+
+    // Setter para health
+    public void setHealth(int health) {
+        if (health >= 0) {
+            this.health = health;
+        }
+    }
 }

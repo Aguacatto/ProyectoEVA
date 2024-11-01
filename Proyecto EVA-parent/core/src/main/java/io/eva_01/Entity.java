@@ -23,7 +23,7 @@ public abstract class Entity {
     }
 
     // Método para reducir la vida de la entidad
-    public void takeDamage(int damage) {
+    protected void takeDamage(int damage) {
         this.health -= damage;
         if (this.health <= 0) {
             onDestroy();

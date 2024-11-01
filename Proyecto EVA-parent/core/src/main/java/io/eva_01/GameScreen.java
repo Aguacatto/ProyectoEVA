@@ -15,19 +15,20 @@ import java.util.List;
 public class GameScreen implements Screen {
     private SpriteBatch batch;
     private PlayerShip player;
+    private static GameScreen instance;
     private List<Entity> entities;
     private List<Collectible> collectibles;
 
     public GameScreen() {
         batch = new SpriteBatch();
-        Texture playerTexture = new Texture("player.png");
+        Texture playerTexture = new Texture("Evangelion_Unit_01_versionTv.png");
         player = new PlayerShip(100, 100, 200, 3, playerTexture);
 
         entities = new ArrayList<>();
         entities.add(player);
 
         // Crear enemigos
-        Texture enemyTexture = new Texture("enemy.png");
+        Texture enemyTexture = new Texture("Ramiel_octahedron.png");
         entities.add(new EnemyShip(300, 500, 100, 1, enemyTexture));
 
         // Crear collectibles (PowerUps)
@@ -36,6 +37,13 @@ public class GameScreen implements Screen {
 
         // Crear obstáculos
         entities.add(new Obstacle(150, 700, 50, 1, new Texture("obstacle.png"), Obstacle.ObstacleType.DAMAGE));
+    }
+    
+    public static GameScreen getInstance() {
+        if (instance == null) {
+            instance = new GameScreen();
+        }
+        return instance;
     }
 
     @Override
@@ -69,4 +77,34 @@ public class GameScreen implements Screen {
             collectible.texture.dispose();
         }
     }
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
 }

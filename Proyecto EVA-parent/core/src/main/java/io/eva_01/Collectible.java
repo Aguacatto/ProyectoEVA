@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 public abstract class Collectible {
     protected float x, y;
     protected Texture texture;
+    private boolean collected;
 
     public Collectible(float x, float y, Texture texture) {
         this.x = x;
