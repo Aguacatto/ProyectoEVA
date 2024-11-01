@@ -20,14 +20,14 @@ public class GameScreen implements Screen {
 
     public GameScreen() {
         batch = new SpriteBatch();
-        Texture playerTexture = new Texture("player.png");
+        Texture playerTexture = new Texture("Evangelion_Unit_01_versionTv.png");
         player = new PlayerShip(100, 100, 200, 3, playerTexture);
 
         entities = new ArrayList<>();
         entities.add(player);
 
         // Crear enemigos
-        Texture enemyTexture = new Texture("enemy.png");
+        Texture enemyTexture = new Texture("Ramiel_octahedron.png");
         entities.add(new EnemyShip(300, 500, 100, 1, enemyTexture));
 
         // Crear collectibles (PowerUps)
@@ -69,4 +69,34 @@ public class GameScreen implements Screen {
             collectible.texture.dispose();
         }
     }
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
 }

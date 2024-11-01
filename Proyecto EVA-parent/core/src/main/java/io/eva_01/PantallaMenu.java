@@ -7,6 +7,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.audio.Music; // Importar la clase Music
+
 
 @SuppressWarnings("unused")
 public class PantallaMenu implements Screen {
@@ -16,6 +18,7 @@ public class PantallaMenu implements Screen {
     private Texture backgroundTexture;
 
     private boolean isFullscreen = false; // Variable para rastrear el estado de pantalla completa
+    private Music backgroundMusic; // Variable para almacenar la música de fondo
     // Define el tamaño de la ventana en modo minimizado
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 800;
@@ -35,6 +38,11 @@ public class PantallaMenu implements Screen {
 
         // Cargar la imagen de fondo desde la carpeta "assets"
         backgroundTexture = new Texture("evaPIXEL.jpg"); // Asegúrate de que la imagen esté en "assets/evaPIXEL.jpg"
+
+        // Cargar la música de fondo desde la carpeta "assets"
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("cruelAngel8bit.mp3")); // Reemplaza "tuCancion.mp3" con el nombre de tu archivo de música
+        backgroundMusic.setLooping(true); // Configurar para que la música se repita
+        backgroundMusic.setVolume(0.5f); // Ajustar el volumen (de 0.0 a 1.0)
     }
 
     @Override
@@ -102,7 +110,9 @@ public class PantallaMenu implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        backgroundMusic.play(); // Reproducir la música cuando la pantalla se muestra
+    }
 
     @Override
     public void pause() {}
@@ -115,7 +125,8 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void dispose() {
-        backgroundTexture.dispose(); // Libera la textura de fondo cuando ya no se necesita
+        backgroundTexture.dispose(); // Libera la textura de fondo
+        backgroundMusic.dispose(); // Libera la música de fondo
     }
 
     private void toggleFullscreen() {
