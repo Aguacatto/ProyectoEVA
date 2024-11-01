@@ -1,5 +1,9 @@
 package io.eva_01;
 
 public interface Shootable {
-    void shoot();
+    BulletEVA shoot();
+    
+    void reload();
+    
+    boolean canShoot();
 }
