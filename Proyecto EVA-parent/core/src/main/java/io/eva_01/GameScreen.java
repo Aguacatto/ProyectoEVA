@@ -15,6 +15,7 @@ import java.util.List;
 public class GameScreen implements Screen {
     private SpriteBatch batch;
     private PlayerShip player;
+    private static GameScreen instance;
     private List<Entity> entities;
     private List<Collectible> collectibles;
 
@@ -36,6 +37,13 @@ public class GameScreen implements Screen {
 
         // Crear obstáculos
         entities.add(new Obstacle(150, 700, 50, 1, new Texture("obstacle.png"), Obstacle.ObstacleType.DAMAGE));
+    }
+    
+    public static GameScreen getInstance() {
+        if (instance == null) {
+            instance = new GameScreen();
+        }
+        return instance;
     }
 
     @Override

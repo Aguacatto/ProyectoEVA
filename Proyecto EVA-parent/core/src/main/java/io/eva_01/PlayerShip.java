@@ -10,6 +10,7 @@ public class PlayerShip extends Entity implements Shootable {
 	private float shootCooldown;
 	private float lastShotTime;	
 	private Texture bulletTexture;
+	private int health;
 	
     public PlayerShip(float x, float y, float speed, int health, Texture texture) {
         super(x, y, speed, health, texture);
@@ -17,6 +18,7 @@ public class PlayerShip extends Entity implements Shootable {
         this.shootCooldown = 0.5f;
         this.lastShotTime = 0;
         this.bulletTexture = bulletTexture;
+        this.health = 100;
     }
 
     @Override
@@ -48,5 +50,15 @@ public class PlayerShip extends Entity implements Shootable {
     	return ammo > 0 && lastShotTime >= shootCooldown;
     }
     
-    
+    // Getter para health
+    public int getHealth() {
+        return health;
+    }
+
+    // Setter para health
+    public void setHealth(int health) {
+        if (health >= 0) {
+            this.health = health;
+        }
+    }
 }
