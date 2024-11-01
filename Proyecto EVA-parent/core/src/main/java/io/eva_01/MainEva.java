@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class MainEva extends Game {
-    private String nombreJuego = "Space Navigation";
+    @SuppressWarnings("unused")
+	private String nombreJuego = "Proyecto:EVA";
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private int highScore;	
