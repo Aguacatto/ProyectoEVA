@@ -8,10 +8,14 @@ public class PowerUp extends Collectible {
     }
 
     private PowerUpType type;
+    private float duration;
+    private boolean isTemp;
 
-    public PowerUp(float x, float y, Texture texture, PowerUpType type) {
+    public PowerUp(float x, float y, Texture texture, PowerUpType type, float duration) {
         super(x, y, texture);
         this.type = type;
+        this.duration = duration;
+        this.isTemp = duration > 0;
     }
 
     @Override

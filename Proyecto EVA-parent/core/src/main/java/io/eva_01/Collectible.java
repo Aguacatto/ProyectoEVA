@@ -27,4 +27,11 @@ public abstract class Collectible {
         return player.getX() < x + texture.getWidth() && player.getX() + player.getWidth() > x &&
                player.getY() < y + texture.getHeight() && player.getY() + player.getHeight() > y;
     }
+    
+    public void collect(PlayerShip player) {
+        if (!collected && isCollected(player)) {
+            collected = true;
+            applyEffect(player);
+        }
+    }
 }

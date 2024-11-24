@@ -13,7 +13,7 @@ import com.badlogic.gdx.audio.Music; // Importar la clase Music
 @SuppressWarnings("unused")
 public class PantallaMenu implements Screen {
 
-    private MainEva game;
+    private MainEva game;	
     private OrthographicCamera camera;
     private Texture backgroundTexture;
 
