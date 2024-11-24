@@ -16,7 +16,9 @@ public class Ball2 {
 
     public Ball2(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
     	spr = new Sprite(tx);
-    	this.x = x; 
+    	this.x = x;
+    	this.y = y;
+        spr.setPosition(x, y);
  	
         //validar que borde de esfera no quede fuera
     	if (x-size < 0) this.x = x+size;
@@ -47,6 +49,10 @@ public class Ball2 {
     }
     public void draw(SpriteBatch batch) {
     	spr.draw(batch);
+    	if (x+xSpeed < 0 || x+xSpeed+spr.getWidth() > Gdx.graphics.getWidth())
+        	xSpeed*= 0;
+        if (y+ySpeed < 0 || y+ySpeed+spr.getHeight() > Gdx.graphics.getHeight())
+        	ySpeed*= 0;
     }
     
     public void checkCollision(Ball2 b2) {

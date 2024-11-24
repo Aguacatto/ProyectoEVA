@@ -31,7 +31,7 @@ public class Nave4 {
     	spr = new Sprite(tx);
     	spr.setPosition(x, y);
     	//spr.setOriginCenter();
-    	spr.setBounds(x, y, 45, 45);
+    	spr.setBounds(x, y, 128, 128);
 
     }
     public void draw(SpriteBatch batch, PantallaJuego juego){
@@ -44,25 +44,16 @@ public class Nave4 {
         	if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;     
 	        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
         	
-	     /*   if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setRotation(++rotacion);
-	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) spr.setRotation(--rotacion);
-	        
-	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-	        	xVel -=Math.sin(Math.toRadians(rotacion));
-	        	yVel +=Math.cos(Math.toRadians(rotacion));
-	        	System.out.println(rotacion+" - "+Math.sin(Math.toRadians(rotacion))+" - "+Math.cos(Math.toRadians(rotacion))) ;    
-	        }
-	        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-	        	xVel +=Math.sin(Math.toRadians(rotacion));
-	        	yVel -=Math.cos(Math.toRadians(rotacion));
-	        	     
-	        }*/
-	        
+	        /*if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setX(x - 1);
+	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) spr.setX(x + 1);
+	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) spr.setY(y + 1);    
+	        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) spr.setY(y - 1);
+	        */
 	        // que se mantenga dentro de los bordes de la ventana
 	        if (x+xVel < 0 || x+xVel+spr.getWidth() > Gdx.graphics.getWidth())
-	        	xVel*=-1;
+	        	xVel*= 0;
 	        if (y+yVel < 0 || y+yVel+spr.getHeight() > Gdx.graphics.getHeight())
-	        	yVel*=-1;
+	        	yVel*= 0;
 	        
 	        spr.setPosition(x+xVel, y+yVel);   
          
@@ -76,7 +67,7 @@ public class Nave4 {
  		 }
         // disparo
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
-          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,3,txBala);
+          Bullet  bala = new Bullet(spr.getX()+(spr.getWidth() - 30),spr.getY()+((spr.getHeight()/2) + 30),3,0,txBala);
 	      juego.agregarBala(bala);
 	      soundBala.play();
         }

@@ -25,6 +25,7 @@ public class PantallaJuego implements Screen {
 	private int velXAsteroides; 
 	private int velYAsteroides; 
 	private int cantAsteroides;
+	private Texture backgroundTexture;
 	
 	private Nave4 nave;
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();
@@ -44,20 +45,21 @@ public class PantallaJuego implements Screen {
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
-		//inicializar assets; musica de fondo y efectos de sonido
-		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
+		//inicializar assets; musica de fondo, backgorund y efectos de sonido
+		backgroundTexture = new Texture("City.gif");
+		explosionSound = Gdx.audio.newSound(Gdx.files.internal("RamielDeath.mp3"));
 		explosionSound.setVolume(1,0.5f);
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("FightMusic.mp3")); //
 		
 		gameMusic.setLooping(true);
-		gameMusic.setVolume(0.5f);
+		gameMusic.setVolume(0.3f);
 		gameMusic.play();
 		
-	    // cargar imagen de la nave, 64x64   
-	    nave = new Nave4(Gdx.graphics.getWidth()/2-50,30,new Texture(Gdx.files.internal("MainShip3.png")),
+	    // cargar imagen de la nave, 128x128  
+	    nave = new Nave4(30,Gdx.graphics.getHeight()/2,new Texture(Gdx.files.internal("eva01Resize.png")),
 	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
-	    				new Texture(Gdx.files.internal("Rocket2.png")), 
-	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
+	    				new Texture(Gdx.files.internal("bullet.png")), 
+	    				Gdx.audio.newSound(Gdx.files.internal("BulletSound.mp3"))); 
         nave.setVidas(vidas);
         //crear asteroides
         Random r = new Random();
@@ -65,7 +67,7 @@ public class PantallaJuego implements Screen {
 	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	   
+	  	            new Texture(Gdx.files.internal("Ramiel_octahedron.png")));	   
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
 	  	}
@@ -82,6 +84,7 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
           batch.begin();
+          game.getBatch().draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		  dibujaEncabezado();
 	      if (!nave.estaHerido()) {
 		      // colisiones entre balas y asteroides y su destruccion  
@@ -150,7 +153,7 @@ public class PantallaJuego implements Screen {
 	      //nivel completado
 	      if (balls1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+3, velYAsteroides+3, cantAsteroides+10);
+					velXAsteroides+2, velYAsteroides+2, cantAsteroides+3);
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
