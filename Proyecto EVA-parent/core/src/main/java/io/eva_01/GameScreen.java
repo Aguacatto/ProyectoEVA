@@ -72,7 +72,7 @@ public class GameScreen implements Screen {
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("RamielDeath.mp3"));
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("FightMusic.mp3"));
         gameMusic.setLooping(true);
-        gameMusic.setVolume(0.3f);
+        gameMusic.setVolume(0.5f);
         gameMusic.play();
     }
     
