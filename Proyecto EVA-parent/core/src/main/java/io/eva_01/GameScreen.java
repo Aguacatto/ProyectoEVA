@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
         initEntities(velXAngeles, velYAngeles, cantAngeles);
         
         isPaused = false;
-        Texture playerTexture = new Texture("Evangelion_Unit_01_versionTv.png");
+        Texture playerTexture = new Texture("eva01Resize.png");
         Texture bulletTexture = new Texture(Gdx.files.internal("bullet.png"));
         player = new PlayerShip(30, Gdx.graphics.getHeight()/2, 10, 10, 3, playerTexture, Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), bulletTexture, Gdx.audio.newSound(Gdx.files.internal("BulletSound.mp3")));
 
