@@ -2,6 +2,7 @@ package io.eva_01;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Obstacle extends Entity {
     public enum ObstacleType {
@@ -10,15 +11,18 @@ public class Obstacle extends Entity {
 
     private ObstacleType type;
 
-    public Obstacle(float x, float y, float speed, int health, Texture texture, ObstacleType type) {
-        super(x, y, speed, health, texture);
+    public Obstacle(float x, float y, float xSpeed, float ySpeed, int health, Texture texture, ObstacleType type) {
+        super(x, y, xSpeed, ySpeed, health, texture);
         this.type = type;
     }
 
     @Override
     public void update(float delta) {
-        // Movimiento del obstáculo
-        y -= speed * delta;
+        y -= ySpeed * delta;
+        
+        if (y + texture.getHeight() < 0) {
+            onDestroy(); // Lógica para destruir o remover el obstáculo
+        }
     }
 
     @Override
@@ -36,8 +40,13 @@ public class Obstacle extends Entity {
                 player.decreaseSpeed(20); // Ejemplo: disminuye la velocidad del jugador
                 break;
             case PUSH_BACK:
-                player.setPosition(player.getX(), player.getY() - 50); // Retrocede al jugador
+                spr.setPosition(spr.getX(), spr.getY() - 50); // Retrocede al jugador
                 break;
         }
     }
+
+	@Override
+	public Rectangle getCollisionArea() {
+		return new Rectangle(x, y, texture.getWidth(), texture.getHeight());
+	}
 }

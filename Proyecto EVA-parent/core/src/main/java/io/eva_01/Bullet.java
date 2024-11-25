@@ -10,7 +10,7 @@ public class Bullet {
 
 	private int xSpeed;
 	private int ySpeed;
-	private boolean destroyed = false;
+	private boolean destroyed;
 	private Sprite spr;
 	    
 	    public Bullet(float x, float y, int xSpeed, int ySpeed, Texture tx) {
@@ -18,6 +18,7 @@ public class Bullet {
 	    	spr.setPosition(x, y);
 	        this.xSpeed = xSpeed;
 	        this.ySpeed = ySpeed;
+	        this.destroyed = false;
 	    }
 	    public void update() {
 	        spr.setPosition(spr.getX()+xSpeed, spr.getY()+ySpeed);

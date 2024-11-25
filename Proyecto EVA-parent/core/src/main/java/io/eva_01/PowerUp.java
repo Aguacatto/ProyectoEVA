@@ -25,13 +25,13 @@ public class PowerUp extends Collectible {
                 player.addLife(1);
                 break;
             case SHIELD:
-                player.activateShield();
+                player.activateShield(10);
                 break;
             case SPEED_BOOST:
-                player.increaseSpeed(50); // Ejemplo: aumenta la velocidad en 50 unidades
+                player.increaseSpeed(10); 
                 break;
             case DOUBLE_SHOT:
-                player.activateDoubleShot();
+                player.activateDoubleShot(20);
                 break;
         }
     }

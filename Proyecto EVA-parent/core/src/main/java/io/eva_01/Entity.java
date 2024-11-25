@@ -2,19 +2,24 @@ package io.eva_01;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Entity {
     protected float x, y; // Posición
-    protected float speed; // Velocidad
+    protected float xSpeed; // Velocidad
+    protected float ySpeed;
     protected int health; // Vida
     protected Texture texture; // Textura de la entidad
+    protected Sprite spr;
 
-    public Entity(float x, float y, float speed, int health, Texture texture) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
+    public Entity(float x, float y, float xSpeed, float ySpeed, int health, Texture texture) {
+        spr = new Sprite(texture);
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
         this.health = health;
         this.texture = texture;
+        spr.setPosition(x, y);
     }
 
     // Método para dibujar la entidad
@@ -35,4 +40,10 @@ public abstract class Entity {
 
     // Método que define lo que sucede al destruir la entidad
     protected abstract void onDestroy();
+    
+    public abstract Rectangle getCollisionArea();
+    
+    public boolean checkCollision(Entity other) {
+        return this.getCollisionArea().overlaps(other.getCollisionArea());
+    }
 }
