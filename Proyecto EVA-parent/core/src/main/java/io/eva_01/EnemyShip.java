@@ -16,7 +16,6 @@ public class EnemyShip extends Entity implements Shootable {
 	private int ammo;
 	private float shootCooldown;
 	private float lastShotTime;
-	private boolean hurt;
 	private float changeDirectionTime = 1.0f; // Tiempo entre cambios de dirección
 	private float timeSinceLastChange = 0;
 	private float directionX = -1; // Componente hacia la izquierda
