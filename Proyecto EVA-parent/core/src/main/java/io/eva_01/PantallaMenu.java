@@ -37,12 +37,12 @@ public class PantallaMenu implements Screen {
         camera.setToOrtho(false, currentWidth, currentHeight);
 
         // Cargar la imagen de fondo desde la carpeta "assets"
-        backgroundTexture = new Texture("evaPIXEL.jpg"); // Asegúrate de que la imagen esté en "assets/evaPIXEL.jpg"
+        backgroundTexture = new Texture("Main.PNG"); // Asegúrate de que la imagen esté en "assets/evaPIXEL.jpg"
 
         // Cargar la música de fondo desde la carpeta "assets"
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("cruelAngel8bit.mp3")); // Reemplaza "tuCancion.mp3" con el nombre de tu archivo de música
         backgroundMusic.setLooping(true); // Configurar para que la música se repita
-        backgroundMusic.setVolume(0.5f); // Ajustar el volumen (de 0.0 a 1.0)
+        backgroundMusic.setVolume(0.3f); // Ajustar el volumen (de 0.0 a 1.0)
     }
 
     @Override

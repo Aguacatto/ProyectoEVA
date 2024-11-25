@@ -48,7 +48,7 @@ public class PantallaGameOver implements Screen {
 	    float screenHeight = Gdx.graphics.getHeight();
 	    
 	    String gameOverText = "Game Over !!!";
-	    String restartText = "Pincha en cualquier lado para reiniciar ...";
+	    String restartText = "Presiona ENTER o ESPACIO para continuar...";
 	    
 	    float gameOverWidth = game.getFont().getData().scaleX * gameOverText.length() * 10; // Ajustar el cálculo según el tamaño de fuente
 	    float restartWidth = game.getFont().getData().scaleX * restartText.length() * 10;
@@ -66,7 +66,7 @@ public class PantallaGameOver implements Screen {
 	
 		game.getBatch().end();
 
-		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			Screen ss = new PantallaJuego(game,1,3,0,1,1,10);
 			game.setScreen(ss);
 			dispose();

@@ -2,6 +2,7 @@ package io.eva_01;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Collectible {
     protected float x, y;
@@ -24,8 +25,11 @@ public abstract class Collectible {
 
     // Método para verificar si el jugador ha recogido el collectible
     public boolean isCollected(PlayerShip player) {
-        return player.getX() < x + texture.getWidth() && player.getX() + player.getWidth() > x &&
-               player.getY() < y + texture.getHeight() && player.getY() + player.getHeight() > y;
+    	return player.getCollisionArea().overlaps(this.getCollisionArea());
+    }
+    
+    public Rectangle getCollisionArea() {
+        return new Rectangle(x, y, texture.getWidth(), texture.getHeight());
     }
     
     public void collect(PlayerShip player) {

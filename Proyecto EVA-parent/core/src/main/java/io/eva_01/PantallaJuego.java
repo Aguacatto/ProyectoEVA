@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -26,6 +27,7 @@ public class PantallaJuego implements Screen {
 	private int velYAsteroides; 
 	private int cantAsteroides;
 	private Texture backgroundTexture;
+	private boolean isPaused;
 	
 	private Nave4 nave;
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();
@@ -41,12 +43,13 @@ public class PantallaJuego implements Screen {
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
 		this.cantAsteroides = cantAsteroides;
+		isPaused = false;
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
 		//inicializar assets; musica de fondo, backgorund y efectos de sonido
-		backgroundTexture = new Texture("City.gif");
+		backgroundTexture = new Texture("1310225.jpeg");
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("RamielDeath.mp3"));
 		explosionSound.setVolume(1,0.5f);
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("FightMusic.mp3")); //
@@ -65,8 +68,7 @@ public class PantallaJuego implements Screen {
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
 	        Ball2 bb = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
-	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
-	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
+	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),velXAsteroides+r.nextInt(4), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
 	  	            new Texture(Gdx.files.internal("Ramiel_octahedron.png")));	   
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
