@@ -26,6 +26,7 @@ public class GameScreen implements Screen {
     private Texture backgroundTexture;
     private PlayerShip player;
     private Sound explosionSound;
+    private int score;
     private Music gameMusic;
     private int velXAngeles;
     private int velYAngeles;
@@ -55,6 +56,7 @@ public class GameScreen implements Screen {
         initAudio();
         initBackground();
         initPlayer(vidas);
+        	
         initEntities(velXAngeles, velYAngeles, cantAngeles);
         
         isPaused = false;
@@ -88,6 +90,8 @@ public class GameScreen implements Screen {
 
         // Crear ángeles pequeños y grandes
         Random r = new Random();
+        
+        MovementStrategy movement = new ZigZagMovementStrategy();
         for (int i = 0; i < asteroidCount / 2; i++) {
             Ball2 angel = new Ball2(r.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
@@ -100,7 +104,8 @@ public class GameScreen implements Screen {
             EnemyShip angel = new EnemyShip(r.nextInt((int)Gdx.graphics.getWidth()),
 	  	            50+r.nextInt((int)Gdx.graphics.getHeight()-50),
 	  	            20+r.nextInt(10), velXAsteroides+r.nextInt(4), velYAsteroides+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("sahaquiel.png")));
+	  	            new Texture(Gdx.files.internal("sahaquiel.png")), movement);
+            angelesShoot.add(angel);
         }
     }
     
@@ -127,6 +132,45 @@ public class GameScreen implements Screen {
         
         game.getBatch().draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
+        dibujaEncabezado();
+	      if (!player.isHerido()) {
+		      // colisiones entre balas y asteroides y su destruccion  
+	    	  for (int i = 0; i < balasEVA.size(); i++) {
+		            BulletEVA b = balasEVA.get(i);
+		            b.update(delta);
+		            for (int j = 0; j < angelesMen.size(); j++) {    
+		              if (b.checkCollision(angelesMen.get(j))) {          
+		            	 explosionSound.play();
+		            	 angelesMen.remove(j);
+		            	 angelesMaj.remove(j);
+		            	 j--;
+		            	 score +=10;
+		              }   	  
+		  	        }
+		                
+		         //   b.draw(batch);
+		            if (b.isDestroyed()) {
+		                balasEVA.remove(b);
+		                i--; //para no saltarse 1 tras eliminar del arraylist
+		            }
+		      }
+		      //actualizar movimiento de asteroides dentro del area
+		      for (Ball2 ball : angelesMen) {
+		          ball.update();
+		      }
+		      //colisiones entre asteroides y sus rebotes  
+		      for (int i=0;i<angelesMen.size();i++) {
+		    	Ball2 ball1 = angelesMen.get(i);   
+		        for (int j=0;j<angelesMaj.size();j++) {
+		          Ball2 ball2 = angelesMaj.get(j); 
+		          if (i<j) {
+		        	  ball1.checkCollision(ball2);
+		     
+		          }
+		        }
+		      } 
+	      }
+        
         // Dibujar y actualizar todas las entidades
         for (Entity entity : entities) {
             entity.update(delta);
@@ -150,6 +194,14 @@ public class GameScreen implements Screen {
         
         checkLevelCompletion();
     }
+    
+    public void dibujaEncabezado() {
+		CharSequence str = "Vidas: "+player.getVidas()+" Ronda: "+manager.getLevel();
+		game.getFont().getData().setScale(2f);		
+		game.getFont().draw(batch, str, 10, 30);
+		game.getFont().draw(batch, "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
+		game.getFont().draw(batch, "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
+	}
 
 	@Override
     public void dispose() {

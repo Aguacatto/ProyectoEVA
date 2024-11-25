@@ -49,4 +49,10 @@ public class Obstacle extends Entity {
 	public Rectangle getCollisionArea() {
 		return new Rectangle(x, y, texture.getWidth(), texture.getHeight());
 	}
+
+	@Override
+	protected void move(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
 }

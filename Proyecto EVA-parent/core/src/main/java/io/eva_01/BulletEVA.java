@@ -21,10 +21,7 @@ public class BulletEVA extends Entity {
     }
 
     @Override
-    public void update(float delta) {
-        // Movimiento de la bala
-        x += xSpeed * delta;
-        
+    public void update(float delta) { 
         spr.setPosition(spr.getX()+xSpeed, spr.getY()+ySpeed);
         if (spr.getX() < 0 || spr.getX()+spr.getWidth() > Gdx.graphics.getWidth()) {
             destroyed = true;
@@ -53,5 +50,21 @@ public class BulletEVA extends Entity {
     }
     
     public boolean isDestroyed() {return destroyed;}
+    
+    public boolean checkCollision(Ball2 b2) {
+        if(spr.getBoundingRectangle().overlaps(b2.getArea())){
+        	// Se destruyen ambos
+            this.destroyed = true;
+            return true;
+
+        }
+        return false;
+    }
+
+	@Override
+	protected void move(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

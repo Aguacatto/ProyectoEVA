@@ -189,4 +189,13 @@ public class PlayerShip extends Entity implements Shootable {
 	protected void onDestroy() {
 		destroyed = true; 
 	}
+
+	@Override
+	protected void move(float delta) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) x -= xSpeed * 20 * delta;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) x += xSpeed * 20 * delta;
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) y -= ySpeed * 20 * delta;
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) y += ySpeed * 20 * delta;
+
+	}
 }

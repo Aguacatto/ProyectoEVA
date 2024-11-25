@@ -3,6 +3,7 @@ package io.eva_01;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 import io.eva_01.Shootable;
@@ -11,6 +12,7 @@ import io.eva_01.Shootable;
 public class EnemyShip extends Entity implements Shootable {
 	private Texture bulletEnemy;
 	private Texture textureEnemy;
+	private MovementStrategy movementStrat;
 	private int ammo;
 	private float shootCooldown;
 	private float lastShotTime;
@@ -20,12 +22,13 @@ public class EnemyShip extends Entity implements Shootable {
 	private float directionX = -1; // Componente hacia la izquierda
 	private float directionY = 0;  // Componente vertical inicial (sin movimiento)
 	
-    public EnemyShip(float x, float y, float xSpeed, float ySpeed, int health, Texture textureEnemy) {
+    public EnemyShip(float x, float y, float xSpeed, float ySpeed, int health, Texture textureEnemy, MovementStrategy movementStrategy) {
         super(x, y, xSpeed, ySpeed, health, textureEnemy);
         this.ammo = 10;
         this.shootCooldown = 1f;
         this.lastShotTime = 0;
         this.bulletEnemy = bulletEnemy;
+        this.movementStrat = movementStrategy;
     }
 
     @Override
@@ -75,6 +78,14 @@ public class EnemyShip extends Entity implements Shootable {
     	if (Math.random() < 0.3) { // 30% de probabilidad
             dropPowerUp();
         }
+    }
+    
+    public void draw(SpriteBatch batch) {
+    	spr.draw(batch);
+    	if (x+xSpeed < 0 || x+xSpeed+spr.getWidth() > Gdx.graphics.getWidth())
+        	xSpeed*= 0;
+        if (y+ySpeed < 0 || y+ySpeed+spr.getHeight() > Gdx.graphics.getHeight())
+        	ySpeed*= 0;
     }
     
     private void dropPowerUp() {
@@ -171,5 +182,10 @@ public class EnemyShip extends Entity implements Shootable {
 	        bullet.onDestroy(); // Destruir la bala al impactar
 	    }
 	}
+	
+	 @Override
+	    protected void move(float delta) {
+	        movementStrat.move(this, delta);
+	    }
 
 }

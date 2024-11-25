@@ -3,6 +3,7 @@ package io.eva_01;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Entity {
@@ -34,6 +35,20 @@ public abstract class Entity {
             onDestroy();
         }
     }
+    
+    public final void updateAndRender(SpriteBatch batch, float delta) {
+        handleCollisions(); // Método opcional: puede ser común o específico
+        render(batch); // Método común para todas las entidades
+    }
+    
+    
+    protected void handleCollisions() {
+    	
+    }
+    
+    protected void render(SpriteBatch batch) {
+        batch.draw(texture, x, y);
+    }
 
     // Método que debe implementarse en las clases hijas para actualizar el comportamiento
     public abstract void update(float delta);
@@ -46,4 +61,33 @@ public abstract class Entity {
     public boolean checkCollision(Entity other) {
         return this.getCollisionArea().overlaps(other.getCollisionArea());
     }
+    
+    public float getY() {
+    	return y;
+    }
+    
+    public float getX() {
+    	return x;
+    }
+    
+    public float getXSpeed() {
+    	return xSpeed;
+    }
+    
+    public float getYSpeed() {
+    	return xSpeed;
+    }
+
+	public void setY(float f) {
+		this.y = f;
+	}
+	
+	public void setX(float f) {
+		this.x = f;
+	}
+
+	protected void move(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
 }
